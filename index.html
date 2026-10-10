@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f0e8">
+    <meta name="description" content="Scan a QR code with your camera or decode one from an image.">
+    <title>Scanline | QR Code Reader</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body class="scanner-page">
+    <header class="scanner-nav">
+      <a class="wordmark" href="portfolio.html"><span class="wordmark-mark">S</span> scanline<span class="wordmark-period">.</span></a>
+      <a class="back-link" href="portfolio.html"><span aria-hidden="true">←</span> Team portfolio</a>
+    </header>
+    <main class="scanner-layout">
+      <section class="scanner-intro">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> QR CODE READER <span class="live-label">BROWSER TOOL</span></p>
+        <h1>Point. Capture.<br><em>Know.</em></h1>
+        <p class="intro-copy">Read a QR code with your camera, or choose an image from your device.</p>
+        <div class="privacy-note"><span class="privacy-icon" aria-hidden="true">◎</span><span>Your camera stays on this device. Only the captured still image is sent to QRServer for decoding.</span></div>
+      </section>
+
+      <section class="scanner-tool" aria-label="QR code scanner">
+        <div class="tool-topline"><span>SCANNER</span><span class="tool-status"><i></i> READY</span></div>
+        <div class="mode-switch" role="tablist" aria-label="Choose scan method">
+          <button class="mode-tab is-active" id="camera-tab" type="button" role="tab" aria-selected="true" aria-controls="camera-panel">Camera</button>
+          <button class="mode-tab" id="upload-tab" type="button" role="tab" aria-selected="false" aria-controls="upload-panel">Upload image</button>
+        </div>
+
+        <div class="camera-panel" id="camera-panel" role="tabpanel" aria-labelledby="camera-tab">
+          <div class="camera-view" id="camera-view">
+            <video id="camera-video" playsinline muted aria-label="Live camera preview"></video>
+            <div class="camera-empty" id="camera-empty">
+              <div class="viewfinder" aria-hidden="true"><span></span><span></span><span></span><span></span><i></i></div>
+              <p>Camera preview will appear here</p>
+            </div>
+            <span class="camera-corner-label">LIVE VIEW</span>
+          </div>
+          <div class="camera-controls">
+            <button class="button button-secondary" id="camera-toggle" type="button"><span aria-hidden="true">◉</span> Start camera</button>
+            <button class="button button-primary" id="capture-button" type="button" disabled><span aria-hidden="true">⌖</span> Capture &amp; scan</button>
+          </div>
+          <p class="camera-hint" id="camera-hint">Camera access works on localhost or a secure (HTTPS) connection.</p>
+        </div>
+
+        <div class="upload-panel" id="upload-panel" role="tabpanel" aria-labelledby="upload-tab" hidden>
+          <label class="upload-drop" for="image-input">
+            <span class="upload-icon" aria-hidden="true">↥</span>
+            <strong>Choose an image to scan</strong>
+            <span>PNG, JPG, or GIF · up to 1 MB</span>
+            <span class="upload-browse">Browse files</span>
+          </label>
+          <input class="sr-only" id="image-input" type="file" accept="image/png,image/jpeg,image/gif">
+          <p class="file-name" id="file-name">No image selected</p>
+        </div>
+
+        <div class="result-area" aria-live="polite" aria-atomic="true">
+          <div class="result-heading"><span>DECODED RESULT</span><button id="clear-button" class="icon-button" type="button" aria-label="Clear result" title="Clear result">×</button></div>
+          <div class="result-content" id="result-content"><span class="result-placeholder">Your QR code contents will show up here.</span></div>
+          <div class="result-actions" id="result-actions" hidden><button class="copy-button" id="copy-button" type="button"><span aria-hidden="true">▢</span> Copy result</button><span id="copy-status" class="copy-status" aria-live="polite"></span></div>
+        </div>
+        <p class="form-message" id="form-message" role="alert" hidden></p>
+        <div class="tool-foot"><span>POWERED BY QRServer API</span><a href="https://goqr.me/api/doc/read-qr-code/" target="_blank" rel="noreferrer">API details ↗</a></div>
+      </section>
+    </main>
+    <footer class="scanner-footer"><span>SCANLINE / 01</span><span>Scan with intention.</span></footer>
+  </body>
+</html>
