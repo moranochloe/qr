@@ -157,7 +157,7 @@ function encodeFrame(canvas, width, height, quality = 0.76) {
         const nextHeight = Math.round(height * 0.75);
         canvas.width = nextWidth;
         canvas.height = nextHeight;
-        drawMirroredFrame(canvas, nextWidth, nextHeight);
+        drawFrame(canvas, nextWidth, nextHeight);
         encodeFrame(canvas, nextWidth, nextHeight, Math.max(quality - 0.12, 0.42)).then(resolve, reject);
       } else {
         reject(new Error("The camera image could not be compressed below 1 MB"));
@@ -166,10 +166,11 @@ function encodeFrame(canvas, width, height, quality = 0.76) {
   });
 }
 
-function drawMirroredFrame(canvas, width, height) {
+// Draw the frame exactly as the camera sees it (NOT mirrored).
+// A mirrored QR code cannot be decoded, so never flip the image sent to the API.
+function drawFrame(canvas, width, height) {
   const context = canvas.getContext("2d");
-  context.translate(width, 0);
-  context.scale(-1, 1);
+  context.setTransform(1, 0, 0, 1, 0, 0);
   context.drawImage(video, 0, 0, width, height);
 }
 
@@ -183,7 +184,7 @@ async function captureAndDecode() {
   const canvas = document.createElement("canvas");
   canvas.width = Math.round(video.videoWidth * scale);
   canvas.height = Math.round(video.videoHeight * scale);
-  drawMirroredFrame(canvas, canvas.width, canvas.height);
+  drawFrame(canvas, canvas.width, canvas.height);
   try {
     const blob = await encodeFrame(canvas, canvas.width, canvas.height);
     await decodeImage(new File([blob], "camera-capture.jpg", { type: "image/jpeg" }));

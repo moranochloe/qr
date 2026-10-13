@@ -101,7 +101,7 @@ button { font: inherit; }
 .mode-tab.is-active { background: var(--white); color: var(--ink); box-shadow: 0 1px 4px rgba(22,58,92,.11); }
 .camera-panel, .upload-panel { padding-top: 15px; }
 .camera-view { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1.55; overflow: hidden; background: var(--ink); color: var(--paper); }
-.camera-view video { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; transform: scaleX(-1); }
+.camera-view video { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; }
 .camera-empty { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 15px; color: #bfd2ea; }
 .camera-empty p { margin: 0; font-size: 11px; }
 .viewfinder { position: relative; width: 75px; height: 75px; }
