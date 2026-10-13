@@ -28,17 +28,34 @@ button { font: inherit; }
 .nav-note { color: var(--muted); }
 .nav-cta, .back-link { display: inline-flex; gap: 12px; align-items: center; color: var(--ink); text-decoration: none; font-size: 13px; font-weight: 700; }
 .nav-cta span, .back-link span { color: var(--red); font-size: 18px; }
-.portfolio-hero { position: relative; min-height: 515px; padding: 100px clamp(22px, 12vw, 178px) 92px; background-color: var(--paper); background-image: radial-gradient(#dbeeff 0.75px, transparent 0.75px); background-size: 19px 19px; overflow: hidden; }
-.portfolio-hero::after { content: ""; position: absolute; width: 380px; height: 380px; right: 11%; top: 44px; border: 1px solid rgba(22,58,92,.12); border-radius: 50%; box-shadow: 0 0 0 38px rgba(22,58,92,.025), 0 0 0 78px rgba(22,58,92,.02); pointer-events: none; }
-.eyebrow { position: relative; z-index: 1; display: flex; align-items: center; gap: 9px; color: var(--muted); margin: 0 0 27px; }
+.portfolio-hero {
+  position: relative;
+  min-height: 515px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(220px, 1fr);
+  grid-template-areas:
+    "eyebrow aside"
+    "title aside"
+    "footer aside";
+  align-items: start;
+  gap: 0 24px;
+  padding: 100px clamp(22px, 12vw, 178px) 92px;
+  background-color: var(--paper);
+  background-image: radial-gradient(#dbeeff 0.75px, transparent 0.75px);
+  background-size: 19px 19px;
+  overflow: hidden;
+}
+.portfolio-hero::after { content: ""; position: absolute; width: clamp(220px, 32vw, 420px); height: clamp(220px, 32vw, 420px); right: clamp(4%, 8vw, 11%); top: 56px; border: 1px solid rgba(22,58,92,.12); border-radius: 50%; box-shadow: 0 0 0 38px rgba(22,58,92,.025), 0 0 0 78px rgba(22,58,92,.02); pointer-events: none; }
+.eyebrow { position: relative; z-index: 1; grid-area: eyebrow; display: flex; align-items: center; gap: 9px; color: var(--muted); margin: 0 0 27px; }
 .eyebrow-dot { height: 7px; width: 7px; display: inline-block; border-radius: 50%; background: var(--red); }
-.portfolio-hero h1, .scanner-intro h1 { position: relative; z-index: 1; max-width: 650px; margin: 0; font-size: clamp(58px, 8vw, 104px); line-height: .91; font-weight: 600; letter-spacing: 0; }
+.portfolio-hero h1, .scanner-intro h1 { position: relative; z-index: 1; max-width: 650px; margin: 0; font-size: clamp(58px, 7.2vw, 104px); line-height: .91; font-weight: 600; letter-spacing: 0; }
+.portfolio-hero h1 { grid-area: title; max-width: 70%; }
 .portfolio-hero h1 span, .project-grid h2 em, .team-heading h2 em, .scanner-intro h1 em { color: var(--red); font-family: var(--serif); font-weight: 500; }
-.hero-aside { position: absolute; z-index: 1; right: 12%; bottom: 90px; width: min(280px, 34%); }
+.hero-aside { position: relative; z-index: 1; grid-area: aside; width: min(280px, 100%); justify-self: end; align-self: center; margin-top: 72px; }
 .hero-aside p { margin: 0 0 20px; color: #4c6888; font-size: 14px; line-height: 1.7; }
 .text-link { font-size: 12px; font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 7px; }
 .text-link span { padding-left: 8px; color: var(--red); }
-.hero-index { position: absolute; bottom: 37px; left: clamp(22px, 12vw, 178px); z-index: 1; display: flex; align-items: center; gap: 10px; color: var(--muted); font: 10px var(--mono); }
+.hero-index { position: relative; z-index: 1; grid-area: footer; display: flex; align-items: center; gap: 10px; color: var(--muted); font: 10px var(--mono); margin-top: 14px; }
 .hero-index span:first-child { color: var(--red); }
 .hero-index i { width: 75px; height: 1px; background: var(--line); }
 .project-band { padding: 27px clamp(22px, 9vw, 132px) 84px; background: var(--ink); color: var(--paper); }
@@ -146,15 +163,44 @@ button { font: inherit; }
 .scanner-footer { display: flex; justify-content: space-between; padding: 16px clamp(22px, 6vw, 92px); border-top: 1px solid var(--line); color: var(--muted); }
 [hidden] { display: none !important; }
 
+@media (max-width: 980px) {
+  .portfolio-hero {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "eyebrow"
+      "title"
+      "aside"
+      "footer";
+    min-height: 620px;
+    padding-top: 80px;
+    padding-bottom: 110px;
+  }
+
+  .portfolio-hero::after {
+    right: 50%;
+    top: 120px;
+    transform: translateX(50%);
+  }
+
+  .portfolio-hero h1 {
+    max-width: 100%;
+  }
+
+  .hero-aside {
+    justify-self: start;
+    width: min(340px, 100%);
+    margin-top: 18px;
+  }
+}
+
 @media (max-width: 760px) {
   .portfolio-nav, .scanner-nav { height: 65px; padding: 0 21px; }
   .nav-note { display: none; }
-  .portfolio-hero { min-height: 545px; padding: 80px 25px 135px; }
-  .portfolio-hero::after { width: 220px; height: 220px; top: 150px; right: -70px; }
+  .portfolio-hero { min-height: 545px; padding: 80px 25px 80px; }
+  .portfolio-hero::after { width: clamp(220px, 52vw, 280px); height: clamp(220px, 52vw, 280px); top: 180px; }
   .portfolio-hero h1 { font-size: clamp(60px, 17vw, 88px); }
-  .hero-aside { right: 25px; bottom: 78px; width: min(270px, calc(100% - 50px)); }
+  .hero-aside { width: min(270px, calc(100% - 10px)); margin-top: 10px; }
   .hero-aside p { font-size: 13px; }
-  .hero-index { left: 25px; bottom: 32px; }
   .project-band, .team-section { padding-left: 24px; padding-right: 24px; }
   .section-kicker { font-size: 9px; }
   .project-grid { grid-template-columns: 1fr; gap: 28px; padding-top: 36px; }
@@ -176,6 +222,23 @@ button { font: inherit; }
   .camera-controls { grid-template-columns: 1fr; }
   .button { min-height: 42px; }
   .scanner-footer { padding: 14px 20px; }
+}
+
+@media (max-width: 520px) {
+  body { padding: 10px; }
+  .portfolio-page, .scanner-page { width: 100%; }
+  .portfolio-nav, .scanner-nav { padding: 0 16px; }
+  .wordmark { font-size: 16px; }
+  .nav-cta, .back-link { font-size: 11px; }
+  .portfolio-hero { min-height: 500px; padding: 60px 20px 70px; }
+  .portfolio-hero::after { width: 210px; height: 210px; top: 150px; }
+  .portfolio-hero h1 { font-size: clamp(48px, 18vw, 74px); }
+  .hero-aside { width: 100%; max-width: 260px; }
+  .hero-aside p { max-width: 280px; }
+  .project-grid h2, .team-heading h2 { font-size: 40px; }
+  .button-link { width: 100%; justify-content: center; }
+  .portfolio-end { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .portfolio-end > span { max-width: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
