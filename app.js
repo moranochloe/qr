@@ -9,6 +9,7 @@ const video = document.querySelector("#camera-video");
 const cameraEmpty = document.querySelector("#camera-empty");
 const cameraToggle = document.querySelector("#camera-toggle");
 const captureButton = document.querySelector("#capture-button");
+const scannerStatus = document.querySelector("#scanner-status");
 const cameraHint = document.querySelector("#camera-hint");
 const imageInput = document.querySelector("#image-input");
 const fileName = document.querySelector("#file-name");
@@ -28,8 +29,13 @@ function setMessage(message, kind = "error") {
   formMessage.hidden = !message;
 }
 
+function updateScannerStatus() {
+  scannerStatus.textContent = requestInProgress ? "READING" : cameraStream ? "CAMERA ON" : "READY";
+}
+
 function setBusy(isBusy) {
   requestInProgress = isBusy;
+  updateScannerStatus();
   captureButton.disabled = isBusy || !cameraStream;
   imageInput.disabled = isBusy;
   cameraToggle.disabled = isBusy;
@@ -47,6 +53,7 @@ function stopCamera() {
   cameraToggle.textContent = "◉ Start camera";
   cameraToggle.disabled = false;
   captureButton.disabled = true;
+  updateScannerStatus();
 }
 
 async function startCamera() {
@@ -71,6 +78,7 @@ async function startCamera() {
     cameraToggle.textContent = "◉ Stop camera";
     cameraToggle.disabled = false;
     captureButton.disabled = false;
+    updateScannerStatus();
     cameraHint.textContent = "Center the QR code in the frame, then capture.";
   } catch (error) {
     stopCamera();
